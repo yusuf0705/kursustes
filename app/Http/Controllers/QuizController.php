@@ -8,6 +8,6 @@ class QuizController extends Controller
 {
     public function index()
     {
-        return view('admin&tutor.quiz');
+        return view('admin_tutor.quiz');
     }
 }

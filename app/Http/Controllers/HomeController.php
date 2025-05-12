@@ -16,19 +16,19 @@ class HomeController extends Controller
     //     return view('contact');
     // }
 
-    // public function landingpage()
-    // {
-    //     return view('landingpage');
-    // }
-    // public function login()
-    // {
-    //     return view('login');
-    // }
+    public function landingpage()
+    {
+        return view('landingpage');
+    }
+    public function login()
+    {
+        return view('login');
+    }
 
-    // public function register()
-    // {
-    //     return view('register');
-    // }
+    public function register()
+    {
+        return view('register');
+    }
 
     public function dashboard()
     {
@@ -36,9 +36,9 @@ class HomeController extends Controller
     }
     
 
-    // public function dashboardadmin()
-    // {
-    //     return view('admin&tutor.dashboardadmin');
-    // }
+    public function dashboardadmin()
+    {
+        return view('admin_tutor.dashboardadmin');
+    }
 }
 

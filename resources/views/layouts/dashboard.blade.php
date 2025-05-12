@@ -31,8 +31,14 @@
                     <span class="material-icons">book</span>
                     History
                 </a>
+                <a href="{{ url('/login') }}" class="flex flex-col items-center">
+                    <span class="material-icons">exit_to_app</span>
+                    logout
+                </a>
+                
             </nav>
         </aside>
+        
 
         <!-- Content -->
         <main class="flex-1 pt-6 pl-24 pr-5 ml-2 min-h-screen">

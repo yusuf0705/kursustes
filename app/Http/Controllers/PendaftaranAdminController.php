@@ -8,6 +8,6 @@ class PendaftaranAdminController extends Controller
 {
         public function index()
         {
-            return view('admin&tutor.pendaftaranadmin');
+            return view('admin_tutor.pendaftaranadmin');
         }
 }

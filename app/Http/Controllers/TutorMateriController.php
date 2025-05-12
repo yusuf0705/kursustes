@@ -9,6 +9,6 @@ class TutorMateriController extends Controller
 {
     public function index()
     {
-        return view('admin&tutor.tutormateri');
+        return view('admin_tutor.tutormateri');
     }
 }

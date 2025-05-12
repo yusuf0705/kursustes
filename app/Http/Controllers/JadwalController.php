@@ -8,7 +8,7 @@ class JadwalController extends Controller
 {
     public function index()
     {
-        return view('admin&tutor.jadwal');
+        return view('admin_tutor.jadwal');
     }
 
 }
