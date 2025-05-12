@@ -63,7 +63,6 @@ Route::get('/course/{name}/materi', [CourseController::class, 'materi']);
 
 
 // route admin dan tutor
-Route::get('/', [HomeController::class, 'dashboardadmin']);
 Route::get('/dashboardadmin', [DashboardAdminController::class, 'index']);
 Route::get('/user', [UserController::class, 'index']);
 Route::get('/tutormateri', [TutorMateriController::class, 'index']);
