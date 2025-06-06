@@ -68,5 +68,5 @@ Route::get('/user', [UserController::class, 'index']);
 Route::get('/tutormateri', [TutorMateriController::class, 'index']);
 Route::get('/pendaftaranadmin', [PendaftaranAdminController::class, 'index']);
 Route::get('/jadwal', [JadwalController::class, 'index']);
-Route::get('/quiz', [QuizController::class, 'index']);
+Route::resource('quiz', QuizController::class); // Otomatis membuat semua route CRUD
 

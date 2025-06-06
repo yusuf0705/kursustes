@@ -11,7 +11,7 @@
     </header>
 
     <div class="container mx-auto mt-4 flex justify-end px-4">
-        <a href="#" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm shadow">
+        <a href="{{ route('quiz.create') }}" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm shadow">
             + Tambah Quiz
         </a>
     </div>
@@ -29,22 +29,31 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white">
+                    @forelse ($quiz as $item)
                     <tr class="hover:bg-gray-50">
-                        <td class="border border-gray-300 px-6 py-4">2</td>
-                        <td class="border border-gray-300 px-6 py-4">Apa yang dimaksud</td>
+                        <td class="border border-gray-300 px-6 py-4">{{ $loop->iteration }}</td>
+                        <td class="border border-gray-300 px-6 py-4">{{ $item->pertanyaan }}</td>
                         <td class="border border-gray-300 px-6 py-4 space-x-1">
-                            <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm">A</button>
-                            <button class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm">B</button>
-                            <button class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm">C</button>
-                            <button class="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 rounded text-sm">D</button>
+                            <button class="bg-blue-600 text-white px-3 py-1 rounded text-sm">{{ $item->opsi_A }}</button>
+                            <button class="bg-red-600 text-white px-3 py-1 rounded text-sm">{{ $item->opsi_B }}</button>
+                            <button class="bg-green-600 text-white px-3 py-1 rounded text-sm">{{ $item->opsi_C }}</button>
+                            <button class="bg-gray-600 text-white px-3 py-1 rounded text-sm">{{ $item->opsi_D }}</button>
                         </td>
-                        <td class="border border-gray-300 px-6 py-4">Jawaban</td>
+                        <td class="border border-gray-300 px-6 py-4">{{ $item->jawaban }}</td>
                         <td class="border border-gray-300 px-6 py-4 space-x-2">
-                            <button class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm">Edit</button>
-                            <button class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm">Hapus</button>
+                            <a href="{{ route('quiz.edit', $item->id_quiz) }}" class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm">Edit</a>
+                            <form action="{{ route('quiz.destroy', $item->id_quiz) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin ingin menghapus quiz ini?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm">Hapus</button>
+                            </form>
                         </td>
                     </tr>
-                    <!-- Tambahkan baris lain di sini jika perlu -->
+                    @empty
+                    <tr>
+                        <td colspan="5" class="text-center py-4 text-gray-500">Belum ada data quiz.</td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
