@@ -40,11 +40,11 @@
                         <td class="border border-gray-300 px-6 py-4">{{ \Illuminate\Support\Str::limit($quiz->pertanyaan, 50) }}</td>
                         <td class="border border-gray-300 px-6 py-4 font-semibold">{{ $quiz->jawaban }}</td>
                         <td class="border border-gray-300 px-6 py-4 space-x-2">
-                            <a href="{{ route('quiz.edit', $quiz) }}"
+                            <a href="{{ route('quiz.edit', $quiz->id) }}"
                                class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm">
                                Edit
                             </a>
-                            <form action="{{ route('quiz.destroy', $quiz) }}" method="POST" class="inline"
+                            <form action="{{ route('quiz.destroy', $quiz->id) }}" method="POST" class="inline"
                                   onsubmit="return confirm('Yakin hapus quiz ini?');">
                                 @csrf
                                 @method('DELETE')
