@@ -4,19 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Kursus;
+use App\Models\Tutor;
 
 class Quiz extends Model
 {
     use HasFactory;
 
     protected $table = 'quizzes';
-
-    // Hapus ini jika primary key default-nya 'id'
-    // Hanya aktifkan jika kolomnya memang BUKAN 'id'
-    protected $primaryKey = 'id'; // default Laravel
-
-    // Jika ID bukan auto-increment, uncomment ini:
-    // public $incrementing = false;
+    protected $primaryKey = 'id'; // atau 'id_quiz' kalau di DB kamu pakai itu
 
     protected $fillable = [
         'id_kursus',
@@ -29,13 +25,11 @@ class Quiz extends Model
         'jawaban'
     ];
 
-    // (Opsional) Relasi ke model Kursus
     public function kursus()
     {
         return $this->belongsTo(Kursus::class, 'id_kursus', 'id_kursus');
     }
 
-    // (Opsional) Relasi ke model Tutor
     public function tutor()
     {
         return $this->belongsTo(Tutor::class, 'id_tutor', 'id');
