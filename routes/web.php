@@ -66,6 +66,8 @@ Route::get('/course/{name}/materi', [CourseController::class, 'materi']);
 Route::get('/dashboardadmin', [DashboardAdminController::class, 'index']);
 Route::get('/user', [UserController::class, 'index']);
 Route::get('/tutormateri', [TutorMateriController::class, 'index']);
+Route::resource('tutormateri', TutormateriController::class);
+
 Route::get('/pendaftaranadmin', [PendaftaranAdminController::class, 'index']);
 Route::get('/jadwal', [JadwalController::class, 'index']);
 Route::resource('jadwal', JadwalController::class);
