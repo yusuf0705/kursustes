@@ -23,7 +23,7 @@
                     <span class="material-icons">dashboard</span>
                     Dashboard
                 </a>
-                <a href="{{ url('/materi') }}" class="flex flex-col items-center">
+                <a href="{{ url('/kursus') }}" class="flex flex-col items-center">
                     <span class="material-icons">school</span>
                     Kursus
                 </a>

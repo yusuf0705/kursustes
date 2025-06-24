@@ -29,7 +29,14 @@
                     <form action="{{ route('register.save') }}" method="POST" id="registerForm" class="space-y-4">
                         @csrf
                         <!-- Hidden field untuk menetapkan role pelajar secara default -->
-                        <input type="hidden" name="role" value="pelajar">
+                        <div>
+                            <select name="role" required>
+                                <option value="pelajar">Pelajar</option>
+                                <option value="tutor">Tutor</option>
+                                <option value="admin">Admin</option>
+
+                            </select>
+                         </div>
                         
                         <div>
                             <label class="block mb-1 text-gray-700 font-medium">Nama Lengkap</label>

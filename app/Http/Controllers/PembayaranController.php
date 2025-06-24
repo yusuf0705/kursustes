@@ -3,33 +3,59 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Pembayaran;
+use App\Models\Pendaftaran;
 
 class PembayaranController extends Controller
 {
-    /**
-     * Tampilkan form pembayaran
-     */
     public function create()
     {
         $kode_bahasa = session('kode_bahasa');
         $harga = session('harga');
+        $pendaftaran_id = session('pendaftaran_id');
 
-        if (!$kode_bahasa || !$harga) {
+        if (!$kode_bahasa || !$harga || !$pendaftaran_id) {
             return redirect()->route('pendaftaran.create')->with('error', 'Data tidak lengkap.');
         }
 
-        return view('pengguna.pembayaran', compact('kode_bahasa', 'harga'));
+        return view('pengguna.pembayaran', compact('kode_bahasa', 'harga', 'pendaftaran_id'));
     }
-    public function success(Request $request)
+
+    public function store(Request $request)
     {
-        $validated = $request->validate([
-            'metode' => 'required|in:Transfer,E-Wallet,Kartu Kredit',
-            'no_rek' => 'required|string|max:50'
+        // Validasi
+        $request->validate([
+            'metode' => 'required|string',
+            'no_rek' => 'required|string|max:255',
+            'bukti' => 'nullable|image|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
 
-        // Simpan jika perlu
-        // ...
+        $pendaftaran_id = session('pendaftaran_id');
+        if (!$pendaftaran_id) {
+            return redirect()->route('pendaftaran.create')->with('error', 'Pendaftaran tidak ditemukan.');
+        }
 
-        return redirect()->route('materi.show', ['kodeBahasa' => session('kode_bahasa')]);
+        // Upload bukti (jika ada)
+        $buktiPath = null;
+        if ($request->hasFile('bukti')) {
+            $buktiPath = $request->file('bukti')->store('bukti_pembayaran', 'public');
+        }
+
+        // Simpan data pembayaran
+        Pembayaran::create([
+            'id_pendaftaran' => $pendaftaran_id,
+            'tanggal_bayar' => now(),
+            'status' => 'pending',
+            'metode_pembayaran' => strtolower($request->metode),
+            'no_rek' => $request->no_rek,
+            'bukti' => $buktiPath,
+        ]);
+
+        return redirect()->route('pembayaran.success')->with('success', 'Pembayaran berhasil disimpan.');
+    }
+
+    public function success()
+    {
+return redirect()->route('kursus.index')->with('success', 'Pembayaran berhasil disimpan.');
     }
 }

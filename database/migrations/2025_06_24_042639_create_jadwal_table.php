@@ -18,8 +18,9 @@ return new class extends Migration {
             $table->timestamps();
 
             // Relasi (foreign key)
-            $table->foreign('id_kursus')->references('id_kursus')->on('kursus')->onDelete('cascade');
-            $table->foreign('id_tutor')->references('id')->on('tutor')->onDelete('cascade');
+
+    $table->foreign('id_kursus')->references('id_kursus')->on('kursus')->onDelete('cascade');
+    $table->foreign('id_tutor')->references('id_tutor')->on('tutor')->onDelete('cascade');
         });
     }
 

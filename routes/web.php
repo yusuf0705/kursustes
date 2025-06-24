@@ -43,24 +43,37 @@ Route::get('/dashboard', [App\Http\Controllers\HomeController::class, 'dashboard
 Route::get('/pendaftaran', [PendaftaranController::class, 'create'])->name('pendaftaran.create');
 Route::post('/pendaftaran', [PendaftaranController::class, 'store'])->name('pendaftaran.store');
 Route::get('/pembayaran', [PembayaranController::class, 'create'])->name('pembayaran.create');
-Route::post('/pembayaran', [PembayaranController::class, 'success'])->name('pembayaran.success');
+Route::post('/pembayaran', [PembayaranController::class, 'store'])->name('pembayaran.store');
+Route::get('/pembayaran/sukses', [PembayaranController::class, 'success'])->name('pembayaran.success');
 
+
+use App\Http\Controllers\KursusController;
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/kursus', [KursusController::class, 'index'])->name('kursus.index');
+});
+
+Route::get('/kursus/{kodeBahasa}', [KursusController::class, 'show'])->name('kursus.show');
+Route::get('/materi/{kode_bahasa}', [App\Http\Controllers\MateriController::class, 'index'])->name('materi');
+// Route::get('/materi/{id}', [KursusController::class, 'materi'])->name('materi');
+Route::get('/materi/{kode_bahasa}', [KursusController::class, 'materiByKode'])->name('materi');
 Route::get('/materi/{kodeBahasa}', [MateriController::class, 'show'])->name('materi.show');
-Route::get('/materi', function () {
-    $kodeBahasa = 'ID';
-    return view('materi', compact('kodeBahasa'));
-});
-Route::get('/materi', function () {
-    return view('materi'); // asumsi file Blade-nya bernama materi.blade.php
-});
-Route::get('/materi', [MateriController::class, 'index']);
+// routes/web.php
+
+// Route::get('/materi', function () {
+//     $kodeBahasa = 'ID';
+//     return view('materi', compact('kodeBahasa'));
+// });
+// Route::get('/materi', function () {
+//     return view('materi'); // asumsi file Blade-nya bernama materi.blade.php
+// });
+// Route::get('/materi', [MateriController::class, 'index']);
 Route::get('/history', [HistoryController::class, 'index'])->name('history');
 Route::get('/history', function () {
     return view('pengguna.history'); // Menampilkan halaman history secara statis
 })->name('history');
 Route::get('/course/{name}', [CourseController::class, 'show']);
 Route::get('/course/{name}/materi', [CourseController::class, 'materi']);
-
 
 // route admin dan tutor
 Route::get('/dashboardadmin', [DashboardAdminController::class, 'index']);

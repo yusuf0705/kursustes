@@ -14,7 +14,17 @@
         <form action="{{ route('pendaftaran.store') }}" method="POST" class="space-y-4">
             @csrf
 
+             @if($id_kursus)
+        <input type="hidden" name="id_kursus" value="{{ $id_kursus }}">
+        <p>ID Kursus: {{ $id_kursus }}</p> <!-- Debug: tampilkan untuk memastikan -->
+    @else
+        <div class="alert alert-danger">
+            <a href="{{ route('kursus.index') }}" class="btn btn-primary"></a>
+        </div>
+    @endif
+
             <!-- Nama -->
+             
             <div>
                 <label for="nama" class="block mb-2 text-sm font-medium text-gray-900">Nama</label>
                 <input type="text" name="nama" id="nama" value="{{ old('nama') }}" placeholder="Nama" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 @error('nama') border-red-500 @enderror" />

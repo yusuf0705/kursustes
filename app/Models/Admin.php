@@ -4,23 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Tutor extends Model
+class Admin extends Model
 {
-    protected $table = 'tutor';
+    protected $table = 'admin';
 
-    protected $primaryKey = 'id_tutor';
-
+    protected $primaryKey = 'id_admin';
     protected $fillable = [
         'user_id',
         'name',
     ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function quizzes()
-    {
-        return $this->hasMany(Quiz::class, 'id_tutor', 'id');
     }
 }

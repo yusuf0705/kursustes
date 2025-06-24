@@ -9,18 +9,42 @@ class Kursus extends Model
 {
     use HasFactory;
 
-    protected $table = 'kursus'; // sesuaikan jika nama tabel berbeda
-    protected $primaryKey = 'id_kursus'; // sesuaikan dengan struktur tabelmu
+    protected $table = 'kursus';
+    protected $primaryKey = 'id_kursus';
 
     protected $fillable = [
-        'nama_kursus',
-        'deskripsi',
-        'kategori',
-        // tambah kolom lain jika ada
+        'id_tutor',
+        'kode_bahasa',
     ];
 
-    public function quizzes()
+    // Relasi ke Tutor
+    public function tutor()
+    {
+        return $this->belongsTo(Tutor::class, 'id_tutor');
+    }
+
+    // Relasi ke Materi
+    public function materi()
+    {
+        return $this->hasMany(Tutormateri::class, 'id_kursus');
+    }
+
+    // Relasi ke Quiz
+ public function quizzes()
     {
         return $this->hasMany(Quiz::class, 'id_kursus', 'id_kursus');
+    }
+
+    // Relasi ke Jadwal
+    public function jadwal()
+{
+    return $this->hasMany(Jadwal::class, 'id_kursus', 'id_kursus');
+}
+
+
+    // Relasi ke Pendaftaran
+    public function pendaftaran()
+    {
+        return $this->hasMany(Pendaftaran::class, 'id_kursus');
     }
 }
