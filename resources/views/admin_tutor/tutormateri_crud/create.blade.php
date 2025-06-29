@@ -8,11 +8,22 @@
     <form action="{{ route('tutormateri.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
         @csrf
 
-        <div>
+        <!-- <div>
             <label for="id_kursus" class="block text-sm font-medium text-gray-700">ID Kursus</label>
             <input type="number" name="id_kursus" id="id_kursus" required
                 class="mt-1 block w-full border border-gray-300 rounded px-3 py-2">
-        </div>
+        </div> -->
+        <div>
+        <label for="id_kursus" class="block text-sm font-medium">Pilih Bahasa</label>
+<select name="id_kursus" class="mt-1 block w-full border-gray-300 rounded">
+    @foreach ($kursusList as $kursus)
+        <option value="{{ $kursus->id_kursus }}">{{ $kursus->kode_bahasa }}</option>
+
+</option>
+    @endforeach
+</select>
+</div>
+
 
         <div>
             <label for="id_tutor" class="block text-sm font-medium text-gray-700">ID Tutor</label>

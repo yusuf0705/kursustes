@@ -19,6 +19,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\TutorMateriController;
 use App\Http\Controllers\PendaftaranAdminController;
 use App\Http\Controllers\QuizController;
+use App\Http\Controllers\QuizPlayController;
+
 
 Route::get('/', [HomeController::class, 'landingpage']);
 Route::get('/landingpage', [HomeController::class, 'landingpage']);
@@ -58,6 +60,8 @@ Route::get('/materi/{kode_bahasa}', [App\Http\Controllers\MateriController::clas
 // Route::get('/materi/{id}', [KursusController::class, 'materi'])->name('materi');
 Route::get('/materi/{kode_bahasa}', [KursusController::class, 'materiByKode'])->name('materi');
 Route::get('/materi/{kodeBahasa}', [MateriController::class, 'show'])->name('materi.show');
+Route::get('/materi/{kode_bahasa}', [MateriController::class, 'show'])->name('materi');
+
 // routes/web.php
 
 // Route::get('/materi', function () {
@@ -85,4 +89,13 @@ Route::get('/pendaftaranadmin', [PendaftaranAdminController::class, 'index']);
 Route::get('/jadwal', [JadwalController::class, 'index']);
 Route::resource('jadwal', JadwalController::class);
 Route::resource('quiz', QuizController::class); // Otomatis membuat semua route CRUD
+
+Route::get('/quiz/play/{kode_bahasa}', [QuizController::class, 'play'])->name('quiz.play');
+Route::post('/quiz/play', [QuizController::class, 'process'])->name('quiz.process');
+Route::get('/quiz/result', [QuizController::class, 'result'])->name('quiz.result');
+Route::prefix('quiz/play')->group(function () {
+    Route::get('/', [QuizPlayController::class, 'index'])->name('quiz.play.index');
+    Route::get('/{id_quiz}', [QuizPlayController::class, 'start'])->name('quiz.play.start');
+    Route::post('/{id_quiz}', [QuizPlayController::class, 'submit'])->name('quiz.play.submit');
+});
 

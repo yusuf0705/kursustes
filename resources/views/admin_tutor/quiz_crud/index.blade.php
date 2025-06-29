@@ -1,71 +1,70 @@
-@extends('layouts.dashboardadmin')
+@extends('layouts.dashboardadmin') {{-- Ganti jika kamu pakai layout lain --}}
 
 @section('content')
+<div class="max-w-5xl mx-auto mt-10 p-6 bg-white shadow rounded-lg">
+    <h1 class="text-2xl font-bold mb-4">Daftar Quiz</h1>
 
-<!-- Main Content -->
-<div class="flex-1 flex flex-col text-center">
-    <!-- Header -->
-    <header class="bg-white p-4 shadow">
-        <div class="container mx-auto">
-            <h1 class="text-xl font-semibold text-gray-800">Daftar Quiz</h1>
+    <a href="{{ route('quiz.create') }}"
+       class="inline-block mb-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">
+        + Buat Quiz
+    </a>
+
+    @if(session('success'))
+        <div class="bg-green-100 border border-green-400 text-green-700 p-2 rounded mb-4">
+            {{ session('success') }}
         </div>
-    </header>
+    @endif
 
-    <div class="container mx-auto mt-4 flex justify-end px-4">
-        <a href="{{ route('quiz.create') }}"
-           class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm shadow">
-            + Tambah Quiz
-        </a>
-    </div>
-
-    <div class="overflow-x-auto m-4">
-        <div class="bg-white shadow-lg rounded-lg overflow-hidden">
-            <table class="min-w-full table-auto border border-gray-300">
-                <thead class="bg-gray-700 text-white">
-                    <tr>
-                        <th class="border border-gray-300 px-6 py-3 text-sm font-semibold uppercase">No</th>
-                        <th class="border border-gray-300 px-6 py-3 text-sm font-semibold uppercase">ID Kursus</th>
-                        <th class="border border-gray-300 px-6 py-3 text-sm font-semibold uppercase">ID Tutor</th>
-                        <th class="border border-gray-300 px-6 py-3 text-sm font-semibold uppercase">Pertanyaan</th>
-                        <th class="border border-gray-300 px-6 py-3 text-sm font-semibold uppercase">Jawaban Benar</th>
-                        <th class="border border-gray-300 px-6 py-3 text-sm font-semibold uppercase">Aksi</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white">
-                    @forelse ($quizzes as $index => $quiz)
-                    <tr class="hover:bg-gray-50">
-                        <td class="border border-gray-300 px-6 py-4">{{ $index + 1 }}</td>
-                        <td class="border border-gray-300 px-6 py-4">{{ $quiz->id_kursus }}</td>
-                        <td class="border border-gray-300 px-6 py-4">{{ $quiz->id_tutor }}</td>
-                        <td class="border border-gray-300 px-6 py-4">{{ \Illuminate\Support\Str::limit($quiz->pertanyaan, 50) }}</td>
-                        <td class="border border-gray-300 px-6 py-4 font-semibold">{{ $quiz->jawaban }}</td>
-                        <td class="border border-gray-300 px-6 py-4 space-x-2">
-                            <a href="{{ route('quiz.edit', $quiz->id) }}"
-                               class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm">
-                               Edit
-                            </a>
-                            <form action="{{ route('quiz.destroy', $quiz->id) }}" method="POST" class="inline"
-                                  onsubmit="return confirm('Yakin hapus quiz ini?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit"
-                                        class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm">
-                                    Hapus
-                                </button>
-                            </form>
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="6" class="border border-gray-300 px-6 py-4 text-center text-gray-500">
-                            Belum ada quiz.
-                        </td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <table class="w-full border text-left">
+        <thead class="bg-gray-100">
+            <tr>
+                <th class="p-2 border">Judul</th>
+                <th class="p-2 border">Bahasa</th>
+                <th class="p-2 border">Jumlah Soal</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse ($quizzes as $quiz)
+            <tr>
+                <td class="p-2 border">{{ $quiz->judul }}</td>
+                <td class="p-2 border">{{ $quiz->kode_bahasa }}</td>
+                <td class="p-2 border">{{ $quiz->questions_count }}</td>
+            </tr>
+            @empty
+            <tr>
+                <td colspan="3" class="text-center p-2">Belum ada quiz.</td>
+            </tr>
+            @endforelse
+        </tbody>
+    </table>
 </div>
-
 @endsection
+
+<!-- @extends('layouts.dashboardadmin')
+
+@section('content')
+<div class="max-w-4xl mx-auto p-6 bg-white rounded shadow mt-10">
+    <h2 class="text-2xl font-bold mb-6">Daftar Quiz</h2>
+
+    <a href="{{ route('quiz.create') }}" class="bg-green-600 text-white px-4 py-2 rounded mb-4 inline-block">+ Buat Quiz</a>
+
+    <table class="w-full table-auto border">
+        <thead>
+            <tr class="bg-gray-200">
+                <th class="px-4 py-2">Judul</th>
+                <th class="px-4 py-2">Bahasa</th>
+                <th class="px-4 py-2">Jumlah Soal</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($quizzes as $quiz)
+            <tr class="text-center">
+                <td class="border px-4 py-2">{{ $quiz->judul }}</td>
+                <td class="border px-4 py-2">{{ $quiz->kode_bahasa }}</td>
+                <td class="border px-4 py-2">{{ $quiz->questions_count }}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+@endsection -->

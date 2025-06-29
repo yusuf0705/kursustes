@@ -21,12 +21,14 @@ class Tutormateri extends Model
 
 
     public function kursus()
-    {
-        return $this->belongsTo(Kursus::class, 'id_kursus');
-    }
+{
+    return $this->belongsTo(Kursus::class, 'kode_bahasa', 'kode_bahasa');
+}
+
 
     public function tutor()
     {
-        return $this->belongsTo(Tutor::class, 'id_tutor');
+        return $this->belongsTo(Tutor::class, 'id_tutor','id_tutor');
     }
+
 }

@@ -1,102 +1,89 @@
 @extends('layouts.dashboardadmin')
 
 @section('content')
-<div class="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow mt-10">
-
-    <h2 class="text-2xl font-semibold mb-6 text-gray-800">Tambah Quiz</h2>
+<div class="max-w-5xl mx-auto mt-10 p-6 bg-white shadow rounded-lg">
+    <h1 class="text-2xl font-bold mb-4">Buat Quiz Baru</h1>
 
     <form action="{{ route('quiz.store') }}" method="POST" class="space-y-6">
         @csrf
 
+        <div class="mb-4">
+    <label for="id_kursus" class="block font-medium">Pilih Kursus</label>
+    <select name="id_kursus" class="w-full border px-3 py-2 rounded" required>
+        @foreach($kursusList as $kursus)
+            <option value="{{ $kursus->id_kursus }}">{{ $kursus->kode_bahasa }}</option>
+        @endforeach
+    </select>
+</div>
+
+        
         <div>
-            <label for="id_kursus" class="block mb-2 text-sm font-medium text-gray-700">ID Kursus</label>
-            <input type="text" id="id_kursus" name="id_kursus" value="{{ old('id_kursus') }}" required
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                placeholder="Masukkan ID Kursus">
-            @error('id_kursus')
-                <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-            @enderror
+            <label class="block text-sm font-semibold">Judul Quiz</label>
+            <input type="text" name="judul" class="w-full border rounded p-2" required>
         </div>
 
         <div>
-            <label for="id_tutor" class="block mb-2 text-sm font-medium text-gray-700">ID Tutor</label>
-            <input type="text" id="id_tutor" name="id_tutor" value="{{ old('id_tutor') }}" required
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                placeholder="Masukkan ID Tutor">
-            @error('id_tutor')
-                <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-            @enderror
-        </div>
-
-        <div>
-            <label for="pertanyaan" class="block mb-2 text-sm font-medium text-gray-700">Pertanyaan</label>
-            <textarea id="pertanyaan" name="pertanyaan" rows="3" required
-                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Tulis pertanyaan di sini...">{{ old('pertanyaan') }}</textarea>
-            @error('pertanyaan')
-                <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-            @enderror
-        </div>
-
-        <div class="grid grid-cols-2 gap-4">
-            <div>
-                <label for="opsi_A" class="block mb-2 text-sm font-medium text-gray-700">Opsi A</label>
-                <input type="text" id="opsi_A" name="opsi_A" value="{{ old('opsi_A') }}" required
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    placeholder="Opsi A">
-                @error('opsi_A')
-                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-            <div>
-                <label for="opsi_B" class="block mb-2 text-sm font-medium text-gray-700">Opsi B</label>
-                <input type="text" id="opsi_B" name="opsi_B" value="{{ old('opsi_B') }}" required
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    placeholder="Opsi B">
-                @error('opsi_B')
-                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-            <div>
-                <label for="opsi_C" class="block mb-2 text-sm font-medium text-gray-700">Opsi C</label>
-                <input type="text" id="opsi_C" name="opsi_C" value="{{ old('opsi_C') }}" required
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    placeholder="Opsi C">
-                @error('opsi_C')
-                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-            <div>
-                <label for="opsi_D" class="block mb-2 text-sm font-medium text-gray-700">Opsi D</label>
-                <input type="text" id="opsi_D" name="opsi_D" value="{{ old('opsi_D') }}" required
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    placeholder="Opsi D">
-                @error('opsi_D')
-                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-                @enderror
-            </div>
-        </div>
-
-        <div>
-            <label for="jawaban" class="block mb-2 text-sm font-medium text-gray-700">Jawaban Benar</label>
-            <select id="jawaban" name="jawaban" required
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                <option value="" disabled selected>-- Pilih Jawaban Benar --</option>
-                <option value="A" {{ old('jawaban') == 'A' ? 'selected' : '' }}>A</option>
-                <option value="B" {{ old('jawaban') == 'B' ? 'selected' : '' }}>B</option>
-                <option value="C" {{ old('jawaban') == 'C' ? 'selected' : '' }}>C</option>
-                <option value="D" {{ old('jawaban') == 'D' ? 'selected' : '' }}>D</option>
+            <label class="block text-sm font-semibold">Kode Bahasa</label>
+            <select name="kode_bahasa" class="w-full border rounded p-2" required>
+                <option value="">-- Pilih Bahasa --</option>
+                <option value="English">English</option>
+                <option value="Jepang">Jepang</option>
+                <option value="Mandarin">Mandarin</option>
+                <option value="Korea">Korea</option>
+                <option value="Spanyol">Spanyol</option>
+                <option value="Jerman">Jerman</option>
             </select>
-            @error('jawaban')
-                <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
-            @enderror
         </div>
 
-        <div class="flex justify-end gap-3 pt-4">
-            <a href="{{ route('quiz.index') }}"
-                class="px-5 py-2 text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300 transition">Batal</a>
-            <button type="submit"
-                class="px-5 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition">Simpan</button>
+        <div>
+            <label class="block text-sm font-semibold">ID Tutor</label>
+            <input type="number" name="id_tutor" class="w-full border rounded p-2" required>
+        </div>
+
+        <hr>
+
+        <h2 class="text-lg font-bold mt-6 mb-2">10 Soal</h2>
+
+        @for ($i = 0; $i < 10; $i++)
+        <div class="border p-4 rounded mb-4">
+            <p class="font-semibold mb-2">Soal {{ $i + 1 }}</p>
+            <div class="mb-2">
+                <label>Pertanyaan</label>
+                <input type="text" name="questions[{{ $i }}][pertanyaan]" class="w-full border rounded p-2" required>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label>Opsi A</label>
+                    <input type="text" name="questions[{{ $i }}][opsi_A]" class="w-full border rounded p-2" required>
+                </div>
+                <div>
+                    <label>Opsi B</label>
+                    <input type="text" name="questions[{{ $i }}][opsi_B]" class="w-full border rounded p-2" required>
+                </div>
+                <div>
+                    <label>Opsi C</label>
+                    <input type="text" name="questions[{{ $i }}][opsi_C]" class="w-full border rounded p-2" required>
+                </div>
+                <div>
+                    <label>Opsi D</label>
+                    <input type="text" name="questions[{{ $i }}][opsi_D]" class="w-full border rounded p-2" required>
+                </div>
+            </div>
+            <div class="mt-3">
+                <label class="block font-medium">Jawaban Benar:</label>
+                <select name="questions[{{ $i }}][jawaban]" class="w-full border px-3 py-2 rounded" required>
+                    <option value="">Pilih Jawaban</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+            </div>
+        </div>
+        @endfor
+
+        <div class="text-right">
+            <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">Simpan Quiz</button>
         </div>
     </form>
 </div>

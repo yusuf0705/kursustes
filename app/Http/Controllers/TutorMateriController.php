@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Tutormateri;
 use Illuminate\Http\Request;
+use App\Models\Kursus;
+
 
 class TutormateriController extends Controller
 {
@@ -14,9 +16,10 @@ class TutormateriController extends Controller
     }
 
     public function create()
-    {
-        return view('admin_tutor.tutormateri_crud.create');
-    }
+{
+    $kursusList = Kursus::all(); // berisi id_kursus dan kode_bahasa
+    return view('admin_tutor.tutormateri_crud.create', compact('kursusList'));
+}
 
     public function store(Request $request)
     {
@@ -50,7 +53,7 @@ class TutormateriController extends Controller
         $tutormateri = Tutormateri::findOrFail($id);
 
         $validated = $request->validate([
-            'id_kursus' => 'required|integer',
+            'kode_bahasa' => 'required|exists:kursus,kode_bahasa',
             'id_tutor' => 'required|integer',
             'judul' => 'required|string|max:255',
             'isi_materi' => 'required|string',

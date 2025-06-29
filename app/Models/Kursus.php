@@ -24,10 +24,15 @@ class Kursus extends Model
     }
 
     // Relasi ke Materi
+    // public function materi()
+    // {
+    //     return $this->hasMany(Tutormateri::class, 'id_kursus');
+    // }
     public function materi()
-    {
-        return $this->hasMany(Tutormateri::class, 'id_kursus');
-    }
+{
+    return $this->hasMany(Tutormateri::class, 'kode_bahasa', 'kode_bahasa');
+}
+
 
     // Relasi ke Quiz
  public function quizzes()
