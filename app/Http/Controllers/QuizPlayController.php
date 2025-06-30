@@ -10,40 +10,36 @@ class QuizPlayController extends Controller
 {
     public function index()
     {
-        $quizzes = Quiz::all(); // tampilkan daftar quiz untuk pelajar
-        return view('quiz.play.index', compact('quizzes'));
+        $quizzes = Quiz::all();
+        return view('pelajar.quiz.index', compact('quizzes'));
     }
 
-    public function start($id_quiz)
+    public function start($id)
     {
-        $quiz = Quiz::with('questions')->findOrFail($id_quiz);
-        return view('quiz.play.start', compact('quiz'));
+        $quiz = Quiz::with('questions')->findOrFail($id);
+        return view('pelajar.quiz.play', compact('quiz'));
     }
 
-    public function submit(Request $request, $id_quiz)
+    public function submit(Request $request, $id)
     {
-        $quiz = Quiz::with('questions')->findOrFail($id_quiz);
-        $questions = $quiz->questions;
-
+        $quiz = Quiz::with('questions')->findOrFail($id);
         $score = 0;
-        $total = count($questions);
-        $answers = [];
 
-        foreach ($questions as $question) {
-            $answer = $request->input('answer_' . $question->id_question);
-            $isCorrect = $answer === $question->jawaban;
-            if ($isCorrect) {
+        foreach ($quiz->questions as $q) {
+            if (isset($request->answers[$q->id_question]) && $request->answers[$q->id_question] == $q->jawaban) {
                 $score++;
             }
-
-            $answers[] = [
-                'question' => $question->pertanyaan,
-                'your_answer' => $answer,
-                'correct_answer' => $question->jawaban,
-                'is_correct' => $isCorrect,
-            ];
         }
 
-        return view('quiz.play.result', compact('quiz', 'score', 'total', 'answers'));
+        return redirect()->route('quiz.play.result', ['id' => $quiz->id_quiz])
+                         ->with(['score' => $score, 'total' => count($quiz->questions)]);
     }
+
+    public function result($id)
+{
+    $quiz = Quiz::with('questions')->findOrFail($id);
+    return view('pengguna.quizresult', compact('quiz'));
+}
+
+
 }

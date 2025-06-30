@@ -30,14 +30,25 @@
                 </div>
             @endforeach
 
-            {{-- Tambahkan quiz jika ada --}}
-            <div class="bg-white border border-purple-200 p-4 rounded shadow mt-6">
-                <h3 class="font-bold text-lg">Quiz materi 1</h3>
-                <p class="text-sm text-gray-500">Quiz</p>
-                <a href="{{ url('/quiz') }}" class="inline-block mt-2 bg-purple-700 text-white px-4 py-2 rounded hover:bg-purple-800">
+            <div class="max-w-3xl mx-auto p-6">
+    <h1 class="text-2xl font-bold mb-4">Daftar Quiz</h1>
+
+    <ul class="space-y-4">
+        @foreach($quizzes as $quiz)
+        <li class="bg-white shadow p-4 rounded">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h2 class="font-semibold">{{ $quiz->judul }}</h2>
+                    <p class="text-sm text-gray-500">Bahasa: {{ $quiz->kode_bahasa }}</p>
+                </div>
+                <a href="{{ route('quiz.play.start', $quiz->id_quiz) }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
                     Mulai Quiz
                 </a>
             </div>
+        </li>
+        @endforeach
+    </ul>
+</div>
         </div>
     @endif
 </main>

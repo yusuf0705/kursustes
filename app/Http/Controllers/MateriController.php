@@ -32,8 +32,8 @@ public function show($kode_bahasa)
     // Ambil materi yang sesuai dengan kursus
     $materiList = TutorMateri::where('id_kursus', $kursus->id_kursus)->get();
         $quiz = Quiz::where('id_kursus', $kursus->id_kursus)->first(); // jika ada quiz
-
-    return view('pengguna.materi', compact('kursus', 'materiList', 'quiz'));
+    $quizzes = Quiz::where('id_kursus', $kursus->id_kursus)->get(); // ambil quiz untuk kursus ini
+    return view('pengguna.materi', compact('kursus', 'materiList', 'quizzes'));
 
 }
 

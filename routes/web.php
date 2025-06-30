@@ -97,5 +97,12 @@ Route::prefix('quiz/play')->group(function () {
     Route::get('/', [QuizPlayController::class, 'index'])->name('quiz.play.index');
     Route::get('/{id_quiz}', [QuizPlayController::class, 'start'])->name('quiz.play.start');
     Route::post('/{id_quiz}', [QuizPlayController::class, 'submit'])->name('quiz.play.submit');
+    Route::get('/quiz/play/{id_quiz}', [QuizController::class, 'play'])->name('quiz.play.start');
+    Route::get('/quiz/result/{id}', [QuizPlayController::class, 'result'])->name('quiz.play.result');
+    // Halaman untuk mulai quiz (GET)
+    Route::get('/quiz/play/{id}', [QuizPlayController::class, 'play'])->name('quiz.play.start');
+    // Proses submit jawaban quiz (POST)
+    Route::post('/quiz/play/{id}', [QuizPlayController::class, 'submit'])->name('quiz.play.submit');
+
 });
 

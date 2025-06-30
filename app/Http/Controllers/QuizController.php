@@ -55,4 +55,16 @@ class QuizController extends Controller
 
 return redirect()->route('quiz.index')->with('success', 'Quiz berhasil ditambahkan.');
     }
+//     public function play($id_quiz)
+// {
+//     $quiz = Quiz::with('questions')->findOrFail($id_quiz);
+//     return view('pengguna.quizplay', [
+//     'quiz' => $quiz, compact('quiz')]);
+// }
+public function play($id)
+{
+    $quiz = Quiz::with('questions')->findOrFail($id);
+    return view('pengguna.quizplay', compact('quiz'));
+}
+
 }
