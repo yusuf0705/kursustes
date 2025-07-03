@@ -17,18 +17,21 @@
     <form action="{{ route('pembayaran.store') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
     @csrf
 
-    <div>
-        <label>Metode Pembayaran</label>
-        <select name="metode" class="w-full p-2 border rounded">
-            <option value="transfer">Transfer Bank</option>
-            <option value="qris">QRIS</option>
-        </select>
-    </div>
+    <!-- Metode Pembayaran -->
+<div>
+    <label>Metode Pembayaran</label>
+    <select name="metode" id="metode" class="w-full p-2 border rounded" onchange="setNoRek()">
+        <option value="">-- Pilih Metode --</option>
+        <option value="transfer">Transfer Bank</option>
+        <option value="qris">QRIS</option>
+    </select>
+</div>
 
-    <div>
-        <label>No. Rekening / Referensi</label>
-        <input type="text" name="no_rek" class="w-full p-2 border rounded" placeholder="Isi nomor rekening / referensi pembayaran">
-    </div>
+<!-- No Rekening / Referensi -->
+<div>
+    <label>No. Rekening / Referensi</label>
+    <input type="text" name="no_rek" id="no_rek" class="w-full p-2 border rounded" placeholder="Isi nomor rekening / referensi pembayaran" readonly>
+</div>
 
     <div>
         <label>Upload Bukti Pembayaran</label>
@@ -40,5 +43,21 @@
 </main>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+    
+<!-- Script -->
+<script>
+    function setNoRek() {
+        const metode = document.getElementById('metode').value;
+        const noRekField = document.getElementById('no_rek');
+
+        if (metode === 'transfer') {
+            noRekField.value = '12345678'; // No rekening bank
+        } else if (metode === 'qris') {
+            noRekField.value = 'QRIS-REFERENSI-0001'; // Referensi QRIS
+        } else {
+            noRekField.value = ''; // Kosongkan jika tidak dipilih
+        }
+    }
+</script>
 </body>
 </html>

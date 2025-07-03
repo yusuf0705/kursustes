@@ -48,8 +48,9 @@ class PendaftaranController extends Controller
         $pendaftaran = Pendaftaran::create([
             'id_pelajar' => $pelajar->id_pelajar,
             'id_kursus' => $kursus->id_kursus,
-            'nama' => $request->nama,
             'kode_bahasa' => strtolower($validated['kode_bahasa']),
+            'durasi' => $request->durasi,
+            'harga' => $request->harga,
             'tanggal_daftar' => now(),
             'status' => 'pending',
         ]);
@@ -64,4 +65,22 @@ class PendaftaranController extends Controller
 
         return redirect()->route('pembayaran.create')->with('success', 'Pendaftaran berhasil.');
     }
+
+public function index()
+{
+    $pendaftaranList = Pendaftaran::with(['pelajar.user', 'kursus', 'pembayaran'])->get();
+    return view('admin_tutor.pendaftaranadmin', compact('pendaftaranList'));
+}
+
+
+
+public function konfirmasi($id)
+{
+    $pendaftaran = Pendaftaran::findOrFail($id);
+    $pendaftaran->status = 'disetujui';
+    $pendaftaran->save();
+
+    return redirect()->back()->with('success', 'Pendaftaran berhasil dikonfirmasi.');
+}
+
 }

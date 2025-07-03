@@ -23,27 +23,23 @@
         </div>
     @endif
 
-            <!-- Nama -->
-             
-            <div>
-                <label for="nama" class="block mb-2 text-sm font-medium text-gray-900">Nama</label>
-                <input type="text" name="nama" id="nama" value="{{ old('nama') }}" placeholder="Nama" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 @error('nama') border-red-500 @enderror" />
-                @error('nama') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
-            </div>
+          <!-- Nama -->
+<div>
+    <label for="nama" class="block mb-2 text-sm font-medium text-gray-900">Nama</label>
+    <input type="text" name="nama" id="name" value="{{ $pelajar->user->name ?? '-' }}" readonly class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5" />
+</div>
 
-            <!-- Telepon -->
-            <div>
-                <label for="telepon" class="block mb-2 text-sm font-medium text-gray-900">No Telepon</label>
-                <input type="text" name="telepon" id="telepon" value="{{ old('telepon') }}" placeholder="No Telepon" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 @error('telepon') border-red-500 @enderror" />
-                @error('telepon') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
-            </div>
+<!-- Telepon -->
+<div>
+    <label for="telepon" class="block mb-2 text-sm font-medium text-gray-900">No Telepon</label>
+    <input type="text" name="telepon" id="telepon" value="{{ $pelajar->user->phone_number ?? '-' }}" readonly class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5" />
+</div>
 
-            <!-- Alamat -->
-            <div>
-                <label for="alamat" class="block mb-2 text-sm font-medium text-gray-900">Alamat</label>
-                <input type="text" name="alamat" id="alamat" value="{{ old('alamat') }}" placeholder="Alamat" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 @error('alamat') border-red-500 @enderror" />
-                @error('alamat') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
-            </div>
+<!-- Alamat -->
+<div>
+    <label for="alamat" class="block mb-2 text-sm font-medium text-gray-900">Alamat</label>
+    <input type="text" name="alamat" id="alamat" value="{{ $pelajar->user->address ?? '-' }}" readonly class="bg-gray-100 border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5" />
+</div>
 
             <!-- Pilih Bahasa -->
             <div>
@@ -60,18 +56,22 @@
             </div>
 
             <!-- Durasi -->
-            <div>
-                <label for="durasi" class="block mb-2 text-sm font-medium text-gray-900">Berapa Bulan</label>
-                <input type="number" name="durasi" id="durasi" value="{{ old('durasi') }}" placeholder="Berapa Bulan" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 @error('durasi') border-red-500 @enderror" />
-                @error('durasi') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
-            </div>
+            <!-- Input Durasi -->
+<div>
+    <label for="durasi" class="block mb-2 text-sm font-medium text-gray-900">Berapa Bulan</label>
+    <input type="number" name="durasi" id="durasi" value="{{ old('durasi') }}" placeholder="Berapa Bulan" min="1" max="12"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 @error('durasi') border-red-500 @enderror"
+        oninput="hitungHarga()" />
+    @error('durasi') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+</div>
 
-            <!-- Harga -->
-            <div>
-                <label class="block mb-2 text-sm font-medium text-gray-900">Harga Program</label>
-                <p class="bg-gray-100 border border-gray-300 text-gray-800 rounded-lg p-2.5">Rp {{ number_format($harga ?? 300000, 0, ',', '.') }}</p>
-                <input type="hidden" name="harga" value="{{ $harga ?? 300000 }}">
-            </div>
+<!-- Harga Program -->
+<div>
+    <label class="block mb-2 text-sm font-medium text-gray-900">Harga Program</label>
+    <p id="hargaDisplay" class="bg-gray-100 border border-gray-300 text-gray-800 rounded-lg p-2.5">Rp {{ number_format(300000, 0, ',', '.') }}</p>
+    <input type="hidden" name="harga" id="hargaInput" value="300000">
+</div>
+
 
             <!-- Tombol Submit -->
             <button type="submit" class="w-full text-white bg-purple-600 hover:bg-purple-700 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Selesaikan Pendaftaran</button>
@@ -81,4 +81,33 @@
     <!-- JS Flowbite -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
 </body>
+
+
+<!-- Script Penghitung Harga -->
+<script>
+    function hitungHarga() {
+        const durasi = parseInt(document.getElementById('durasi').value) || 1;
+        let harga = 0;
+
+        // Logika harga: 
+        // 1 bulan = 300k, 
+        // 2 bulan = 600k,
+        // 3 bulan = 800k, dst.
+        if (durasi === 1) {
+            harga = 300000;
+        } else if (durasi === 2) {
+            harga = 600000;
+        } else if (durasi === 3) {
+            harga = 800000;
+        } else {
+            // Lebih dari 3 bulan = 800k + (durasi - 3) * 200k
+            harga = 800000 + ((durasi - 3) * 200000);
+        }
+
+        // Tampilkan harga di tampilan
+        document.getElementById('hargaDisplay').innerText = 'Rp ' + harga.toLocaleString('id-ID');
+        document.getElementById('hargaInput').value = harga;
+    }
+</script>
+
 </html>

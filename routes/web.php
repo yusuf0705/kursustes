@@ -85,6 +85,10 @@ Route::get('/user', [UserController::class, 'index']);
 Route::get('/tutormateri', [TutorMateriController::class, 'index']);
 Route::resource('tutormateri', TutormateriController::class);
 
+Route::get('/admin/pendaftaran', [PendaftaranController::class, 'index'])->name('pendaftaran.index');
+Route::get('/admin/pendaftaran', [PendaftaranController::class, 'index'])->name('admin.pendaftaran.index');
+Route::put('/admin/pendaftaran/{id}/konfirmasi', [PendaftaranController::class, 'konfirmasi'])->name('pendaftaran.konfirmasi');
+Route::put('/admin/pendaftaran/konfirmasi/{id}', [PendaftaranController::class, 'konfirmasi'])->name('admin.pendaftaran.konfirmasi');
 Route::get('/pendaftaranadmin', [PendaftaranAdminController::class, 'index']);
 Route::get('/jadwal', [JadwalController::class, 'index']);
 Route::resource('jadwal', JadwalController::class);

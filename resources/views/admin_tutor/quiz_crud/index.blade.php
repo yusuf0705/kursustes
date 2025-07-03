@@ -39,32 +39,3 @@
     </table>
 </div>
 @endsection
-
-<!-- @extends('layouts.dashboardadmin')
-
-@section('content')
-<div class="max-w-4xl mx-auto p-6 bg-white rounded shadow mt-10">
-    <h2 class="text-2xl font-bold mb-6">Daftar Quiz</h2>
-
-    <a href="{{ route('quiz.create') }}" class="bg-green-600 text-white px-4 py-2 rounded mb-4 inline-block">+ Buat Quiz</a>
-
-    <table class="w-full table-auto border">
-        <thead>
-            <tr class="bg-gray-200">
-                <th class="px-4 py-2">Judul</th>
-                <th class="px-4 py-2">Bahasa</th>
-                <th class="px-4 py-2">Jumlah Soal</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($quizzes as $quiz)
-            <tr class="text-center">
-                <td class="border px-4 py-2">{{ $quiz->judul }}</td>
-                <td class="border px-4 py-2">{{ $quiz->kode_bahasa }}</td>
-                <td class="border px-4 py-2">{{ $quiz->questions_count }}</td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
-@endsection -->

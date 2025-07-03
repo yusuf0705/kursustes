@@ -11,9 +11,10 @@ return new class extends Migration {
             $table->id('id_pendaftaran');
             $table->unsignedBigInteger('id_pelajar');
             $table->unsignedBigInteger('id_kursus'); // <== Pastikan ini ada
-            $table->string('nama');
             $table->enum('kode_bahasa', ['English', 'Jepang', 'Mandarin', 'Korea', 'Spanyol', 'Jerman']);
             $table->timestamp('tanggal_daftar')->nullable();
+            $table->integer('durasi')->nullable();
+            $table->integer('harga')->unsigned()->nullable(); // ✅ BENAR
             $table->enum('status', ['pending', 'disetujui', 'ditolak'])->default('pending');
             $table->timestamps();
 

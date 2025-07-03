@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Pembayaran;
 use App\Models\Pendaftaran;
+use App\Models\Pelajar;
+use Illuminate\Support\Facades\Auth;
+
+
 
 class PembayaranController extends Controller
 {
@@ -29,6 +33,15 @@ class PembayaranController extends Controller
             'no_rek' => 'required|string|max:255',
             'bukti' => 'nullable|image|mimes:jpg,jpeg,png,pdf|max:2048',
         ]);
+         $id_kursus = $request->query('id_kursus');
+
+    $pelajar = Pelajar::with('user')->where('user_id', Auth::id())->first();
+
+    if (!$pelajar) {
+        return redirect()->route('dashboard')->with('error', 'Data pelajar tidak ditemukan.');
+    }
+
+    return view('pengguna.pendaftaran', compact('pelajar', 'id_kursus'));
 
         $pendaftaran_id = session('pendaftaran_id');
         if (!$pendaftaran_id) {
@@ -37,9 +50,12 @@ class PembayaranController extends Controller
 
         // Upload bukti (jika ada)
         $buktiPath = null;
-        if ($request->hasFile('bukti')) {
-            $buktiPath = $request->file('bukti')->store('bukti_pembayaran', 'public');
-        }
+
+    if ($request->hasFile('bukti')) {
+    $buktiPath = $request->file('bukti')->store('bukti_pembayaran', 'public');
+}
+
+
 
         // Simpan data pembayaran
         Pembayaran::create([

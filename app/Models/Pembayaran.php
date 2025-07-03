@@ -15,5 +15,20 @@ class Pembayaran extends Model
         'tanggal_bayar',
         'status',
         'metode_pembayaran',
+        'bukti'
     ];
+    public function pelajar()
+{
+    return $this->belongsTo(Pelajar::class, 'id_pelajar', 'id_pelajar');
+}
+public function kursus()
+{
+    return $this->belongsTo(Kursus::class, 'id_kursus', 'id_kursus');
+}
+public function pendaftaran()
+{
+    return $this->belongsTo(\App\Models\Pendaftaran::class, 'id_pendaftaran', 'id_pendaftaran');
+}
+
+
 }
