@@ -10,8 +10,11 @@
     <div class="flex min-h-screen">
         <!-- Sidebar -->
         <aside class="fixed w-20 md:w-24 bg-pink-200 border-r border-gray-300 h-screen flex flex-col items-center py-4 space-y-6">
+            <button class="text-purple-700 hover:text-purple-900">
+                <span class="material-icons">list</span>
+            </button>
             <nav class="flex flex-col items-center space-y-6 text-purple-800 text-sm">
-                <a href="{{ route('pendaftaran.create') }}" class="flex flex-col items-center">
+                <a href="{{ route('pendaftaran.create', ['harga' => 300000]) }}" class="flex flex-col items-center">
                     <span class="material-icons">add</span>
                     Daftar
                 </a>
@@ -23,16 +26,15 @@
                     <span class="material-icons">school</span>
                     Kursus
                 </a>
-                <a href="{{ url('/history') }}" class="flex flex-col items-center">
-                    <span class="material-icons">book</span>
-                    History
-                </a>
+
                 <a href="{{ url('/login') }}" class="flex flex-col items-center">
                     <span class="material-icons">exit_to_app</span>
-                    Logout
+                    logout
                 </a>
+                
             </nav>
         </aside>
+        
 
         <!-- Main Content -->
         <main class="flex-1 p-6 ml-24">
@@ -46,19 +48,32 @@
             @else
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
                     @foreach($kursusDiambil as $kursus)
-                        <div class="bg-white p-4 rounded shadow">
-                            <div class="h-32 bg-gray-100 rounded mb-4 flex items-center justify-center">
-                                <span class="material-icons text-gray-400 text-5xl">image</span>
+                        <div class="bg-white p-4 rounded shadow hover:shadow-lg transition-shadow">
+                            <!-- Flag Image -->
+                            <div class="h-32 bg-gray-100 rounded mb-4 overflow-hidden">
+                                @if($kursus->flag_image)
+                                    <img src="{{ $kursus->flag_image }}" 
+                                         alt="{{ ucfirst($kursus->kode_bahasa) }} Flag"
+                                         class="w-full h-full object-cover"
+                                         onerror="this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center\'><span class=\'material-icons text-gray-400 text-5xl\'>language</span></div>'">
+                                @else
+                                    <div class="w-full h-full flex items-center justify-center">
+                                        <span class="material-icons text-gray-400 text-5xl">language</span>
+                                    </div>
+                                @endif
                             </div>
-                            <h2 class="text-lg font-bold capitalize">{{ $kursus->kode_bahasa }}</h2>
-                            <p class="text-sm text-gray-600 mt-2">
+                            
+                            <!-- Course Info -->
+                            <h2 class="text-lg font-bold capitalize mb-2">{{ $kursus->kode_bahasa }}</h2>
+                            <p class="text-sm text-gray-600 mb-4">
                                 {{ $kursus->deskripsi ?? 'Deskripsi belum tersedia untuk kursus ini.' }}
                             </p>
+                            
+                            <!-- Action Button -->
                             <a href="{{ route('materi', ['kode_bahasa' => $kursus->kode_bahasa]) }}"
-   class="bg-purple-700 text-white px-4 py-2 rounded hover:bg-purple-800 text-center w-full block">
-   Mulai Belajar
-</a>
-
+                               class="bg-purple-700 text-white px-4 py-2 rounded hover:bg-purple-800 text-center w-full block transition-colors">
+                               Mulai Belajar
+                            </a>
                         </div>
                     @endforeach
                 </div>

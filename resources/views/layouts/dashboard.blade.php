@@ -27,10 +27,7 @@
                     <span class="material-icons">school</span>
                     Kursus
                 </a>
-                <a href="{{ url('/history') }}" class="flex flex-col items-center">
-                    <span class="material-icons">book</span>
-                    History
-                </a>
+
                 <a href="{{ url('/login') }}" class="flex flex-col items-center">
                     <span class="material-icons">exit_to_app</span>
                     logout
