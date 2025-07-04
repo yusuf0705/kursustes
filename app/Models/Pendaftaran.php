@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\pembayaran;
 
 class Pendaftaran extends Model
 {
@@ -31,7 +32,7 @@ class Pendaftaran extends Model
     // }
    public function pembayaran()
 {
-    return $this->hasOne(\App\Models\Pembayaran::class, 'id_pendaftaran', 'id_pendaftaran');
+    return $this->hasOne(Pembayaran::class, 'id_pendaftaran', 'id_pendaftaran');
 }
 
 // app/Models/Pendaftaran.php

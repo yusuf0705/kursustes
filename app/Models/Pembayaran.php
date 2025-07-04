@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Pendaftaran;
 
 class Pembayaran extends Model
 {
@@ -25,10 +26,12 @@ public function kursus()
 {
     return $this->belongsTo(Kursus::class, 'id_kursus', 'id_kursus');
 }
+
 public function pendaftaran()
 {
-    return $this->belongsTo(\App\Models\Pendaftaran::class, 'id_pendaftaran', 'id_pendaftaran');
+    return $this->belongsTo(Pendaftaran::class, 'id_pendaftaran', 'id_pendaftaran');
 }
+
 
 
 }

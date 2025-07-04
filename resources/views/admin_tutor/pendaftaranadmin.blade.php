@@ -45,6 +45,7 @@
                        <td class="border px-6 py-4">
     @if ($data->pembayaran && $data->pembayaran->bukti)
         <a href="{{ asset('storage/' . $data->pembayaran->bukti) }}" target="_blank" class="text-blue-600 underline">
+
             Lihat Bukti
         </a>
     @else
@@ -72,6 +73,13 @@
                             @else
                             <span class="text-gray-500 text-sm">Sudah dikonfirmasi</span>
                             @endif
+                             <form action="{{ route('admin.pendaftaran.destroy', $data->id_pendaftaran) }}" method="POST" class="inline" onsubmit="return confirm('Yakin ingin menghapus pendaftaran ini?')">
+        @csrf
+        @method('DELETE')
+        <button class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm">
+            Hapus
+        </button>
+    </form>
                         </td>
                     </tr>
                     @endforeach

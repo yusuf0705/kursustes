@@ -36,8 +36,16 @@
     <div>
         <label>Upload Bukti Pembayaran</label>
         <input type="file" name="bukti" class="w-full p-2 border rounded">
-
-    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Bayar Sekarang</button>
+    </div>
+     <!-- Tombol Submit -->
+    <div class="flex space-x-2">
+        <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">
+            Kirim Pembayaran
+        </button>
+        <a href="{{ route('kursus.index') }}" class="bg-blue-600 text-white px-4 py-2 rounded inline-block">
+            Kembali ke Kursus
+        </a>
+    </div>
 </form>
 
 </main>

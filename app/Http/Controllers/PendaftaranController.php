@@ -8,6 +8,7 @@ use App\Models\Pendaftaran;
 use App\Models\Pelajar;
 use App\Models\Kursus;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Storage;
 
 class PendaftaranController extends Controller
 {
@@ -82,5 +83,20 @@ public function konfirmasi($id)
 
     return redirect()->back()->with('success', 'Pendaftaran berhasil dikonfirmasi.');
 }
+public function destroy($id)
+{
+    $pendaftaran = Pendaftaran::findOrFail($id);
+
+    // Jika ada pembayaran terkait, hapus juga
+    if ($pendaftaran->pembayaran) {
+        // Hapus file bukti jika ada
+        $pendaftaran->pembayaran->delete();
+    }
+
+    $pendaftaran->delete();
+
+    return redirect()->back()->with('success', 'Pendaftaran berhasil dihapus.');
+}
+
 
 }

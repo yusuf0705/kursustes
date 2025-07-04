@@ -26,22 +26,37 @@ class PembayaranController extends Controller
     }
 
     public function store(Request $request)
-    {
-        // Validasi
-        $request->validate([
-            'metode' => 'required|string',
-            'no_rek' => 'required|string|max:255',
-            'bukti' => 'nullable|image|mimes:jpg,jpeg,png,pdf|max:2048',
-        ]);
-         $id_kursus = $request->query('id_kursus');
+{
+    // Validasi
+    $request->validate([
+        'metode' => 'required|string',
+        'no_rek' => 'required|string|max:255',
+        'bukti' => 'nullable|image|mimes:jpg,jpeg,png,pdf|max:2048',
+    ]);
 
-    $pelajar = Pelajar::with('user')->where('user_id', Auth::id())->first();
-
-    if (!$pelajar) {
-        return redirect()->route('dashboard')->with('error', 'Data pelajar tidak ditemukan.');
+    $pendaftaran_id = session('pendaftaran_id');
+    if (!$pendaftaran_id) {
+        return redirect()->route('pendaftaran.create')->with('error', 'Pendaftaran tidak ditemukan.');
     }
 
-    return view('pengguna.pendaftaran', compact('pelajar', 'id_kursus'));
+    // Upload bukti (jika ada)
+    $buktiPath = null;
+    if ($request->hasFile('bukti')) {
+        $buktiPath = $request->file('bukti')->store('bukti_pembayaran', 'public');
+    }
+
+    // Simpan data pembayaran
+    Pembayaran::create([
+        'id_pendaftaran' => $pendaftaran_id,
+        'tanggal_bayar' => now(),
+        'status' => 'pending',
+        'metode_pembayaran' => strtolower($request->metode),
+        'no_rek' => $request->no_rek,
+        'bukti' => $buktiPath,
+    ]);
+
+    return redirect()->route('pembayaran.success')->with('success', 'Pembayaran berhasil disimpan.');
+
 
         $pendaftaran_id = session('pendaftaran_id');
         if (!$pendaftaran_id) {

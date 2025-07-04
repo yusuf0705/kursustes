@@ -84,7 +84,7 @@ Route::get('/dashboardadmin', [DashboardAdminController::class, 'index']);
 Route::get('/user', [UserController::class, 'index']);
 Route::get('/tutormateri', [TutorMateriController::class, 'index']);
 Route::resource('tutormateri', TutormateriController::class);
-
+Route::delete('/admin/pendaftaran/{id}', [PendaftaranController::class, 'destroy'])->name('admin.pendaftaran.destroy');
 Route::get('/admin/pendaftaran', [PendaftaranController::class, 'index'])->name('pendaftaran.index');
 Route::get('/admin/pendaftaran', [PendaftaranController::class, 'index'])->name('admin.pendaftaran.index');
 Route::put('/admin/pendaftaran/{id}/konfirmasi', [PendaftaranController::class, 'konfirmasi'])->name('pendaftaran.konfirmasi');
