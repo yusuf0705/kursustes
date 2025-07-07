@@ -63,7 +63,7 @@
                     </div>
                     <div>
                         <h2 class="text-lg font-semibold">
-                            <a href="/course/${course.name}" class="text-purple-700 hover:underline">
+                            <a href="/course/${course.name}" class="text-gray-800 hover:underline">
                                 ${course.name}
                             </a>
                         </h2>

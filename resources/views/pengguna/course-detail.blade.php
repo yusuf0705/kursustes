@@ -8,7 +8,7 @@
 <body class="bg-purple-50 min-h-screen font-sans">
 
     <div class="max-w-4xl mx-auto px-6 py-10">
-        <a href="{{ url()->previous() }}" class="text-purple-700 hover:underline mb-4 inline-block">&larr; Kembali</a>
+        <a href="{{ url()->previous() }}" class="text-gray-800 hover:underline mb-4 inline-block">&larr; Kembali</a>
 
         <div class="bg-white rounded-xl shadow-md overflow-hidden grid md:grid-cols-2">
             <img src="{{ $course['image'] }}" alt="{{ $course['name'] }}" class="object-cover w-full h-64 md:h-auto">
@@ -19,7 +19,7 @@
                     <p class="text-gray-800 font-medium">Harga: Rp300.000 / Bulan</p>
                 </div>
                 <a href="{{ route('pendaftaran.create', ['harga' => 300000]) }}"
-                    class="bg-purple-700 text-white px-4 py-2 rounded hover:bg-purple-800 text-center w-full block">
+                    class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-800 text-center w-full block">
                     Mulai Belajar
                 </a>
 

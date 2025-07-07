@@ -80,6 +80,14 @@ Route::get('/course/{name}', [CourseController::class, 'show']);
 Route::get('/course/{name}/materi', [CourseController::class, 'materi']);
 
 // route admin dan tutor
+Route::prefix('admin/kursus')->name('kursus.')->group(function () {
+    Route::get('/', [KursusController::class, 'index'])->name('index');
+    Route::get('/create', [KursusController::class, 'create'])->name('create');
+    Route::post('/', [KursusController::class, 'store'])->name('store');
+    Route::get('/{id}/edit', [KursusController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [KursusController::class, 'update'])->name('update');
+    Route::delete('/{id}', [KursusController::class, 'destroy'])->name('destroy');
+});
 Route::get('/dashboardadmin', [DashboardAdminController::class, 'index']);
 Route::get('/user', [UserController::class, 'index']);
 Route::get('/tutormateri', [TutorMateriController::class, 'index']);

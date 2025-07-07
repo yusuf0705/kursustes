@@ -42,9 +42,6 @@
         <button type="submit" class="bg-green-600 text-white px-4 py-2 rounded">
             Kirim Pembayaran
         </button>
-        <a href="{{ route('kursus.index') }}" class="bg-blue-600 text-white px-4 py-2 rounded inline-block">
-            Kembali ke Kursus
-        </a>
     </div>
 </form>
 
