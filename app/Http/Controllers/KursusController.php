@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Pendaftaran;
 use App\Models\Kursus;
 use App\Models\Pelajar;
+use App\Models\Tutor; 
 
 class KursusController extends Controller
 {
@@ -106,6 +107,63 @@ class KursusController extends Controller
         
         return view('pengguna.all-courses', compact('allKursus'));
     }
+
+    public function adminIndex()
+{
+    $kursusList = Kursus::with('tutor')->get(); // Jika kamu ingin tampilkan tutor
+    return view('admin_tutor.kursus_crud.index', compact('kursusList'));
+}
+
+
+    public function create()
+{
+    $tutors = Tutor::with('user')->get(); // Pastikan relasi 'user' sudah ada di model Tutor
+    return view('admin_tutor.kursus_crud.create', compact('tutors'));
+}
+
+
+// Menyimpan data kursus baru
+public function store(Request $request)
+{
+    $validated = $request->validate([
+        'id_tutor' => 'required|exists:tutor,id_tutor',
+        'kode_bahasa' => 'required|in:English,Jepang,Mandarin,Korea,Spanyol,Jerman|unique:kursus,kode_bahasa',
+    ]);
+
+    Kursus::create($validated);
+
+    return redirect()->route('admin.kursus.index')->with('success', 'Kursus berhasil ditambahkan.');
+}
+
+// Menampilkan form edit kursus
+public function edit($id)
+{
+    $kursus = Kursus::findOrFail($id);
+    return view('admin_tutor.kursus_crud.edit', compact('kursus'));
+}
+
+public function destroy($id)
+{
+    $kursus = Kursus::findOrFail($id);
+    $kursus->delete();
+
+    return redirect()->route('admin.kursus.index')->with('success', 'Kursus berhasil dihapus.');
+}
+
+// Menyimpan perubahan pada kursus
+public function update(Request $request, $id)
+{
+    $kursus = Kursus::findOrFail($id);
+
+    $validated = $request->validate([
+        'id_tutor' => 'required|exists:tutor,id_tutor',
+        'kode_bahasa' => 'required|in:English,Jepang,Mandarin,Korea,Spanyol,Jerman|unique:kursus,kode_bahasa,' . $kursus->id_kursus . ',id_kursus',
+    ]);
+
+    $kursus->update($validated);
+
+    return redirect()->route('admin.kursus.index')->with('success', 'Kursus berhasil diperbarui.');
+}
 
     /**
      * Get course detail with flag

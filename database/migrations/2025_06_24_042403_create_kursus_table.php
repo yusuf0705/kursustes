@@ -11,6 +11,7 @@ return new class extends Migration {
     $table->unsignedBigInteger('id_tutor');
     $table->enum('kode_bahasa', ['English', 'Jepang', 'Mandarin', 'Korea', 'Spanyol', 'Jerman'])->unique();
     $table->foreign('id_tutor')->references('id_tutor')->on('tutor')->onDelete('cascade');
+    $table->timestamps(); 
 });
 
     }

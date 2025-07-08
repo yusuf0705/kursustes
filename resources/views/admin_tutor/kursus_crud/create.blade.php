@@ -14,7 +14,7 @@
         </div>
     @endif
 
-    <form action="{{ route('kursus.store') }}" method="POST">
+<form action="{{ route('admin.kursus.store') }}" method="POST">
         @csrf
 
         <div class="mb-4">

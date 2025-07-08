@@ -7,7 +7,7 @@
          style="background-image: url('https://semanasantabaena.com/wp-content/uploads/2019/12/manfaat-membaca-buku.jpg');">
         <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
         <div class="relative text-center">
-            <h1 class="text-2xl font-bold">Kursus Bahasa</h1>
+            <h1 class="text-2xl font-bold"></h1>
         </div>
     </div>
 

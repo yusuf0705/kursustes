@@ -80,14 +80,16 @@ Route::get('/course/{name}', [CourseController::class, 'show']);
 Route::get('/course/{name}/materi', [CourseController::class, 'materi']);
 
 // route admin dan tutor
-Route::prefix('admin/kursus')->name('kursus.')->group(function () {
-    Route::get('/', [KursusController::class, 'index'])->name('index');
-    Route::get('/create', [KursusController::class, 'create'])->name('create');
-    Route::post('/', [KursusController::class, 'store'])->name('store');
-    Route::get('/{id}/edit', [KursusController::class, 'edit'])->name('edit');
-    Route::put('/{id}', [KursusController::class, 'update'])->name('update');
-    Route::delete('/{id}', [KursusController::class, 'destroy'])->name('destroy');
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/kursus', [KursusController::class, 'adminIndex'])->name('kursus.index');
+    Route::get('/kursus/create', [KursusController::class, 'create'])->name('kursus.create');
+    Route::post('/kursus', [KursusController::class, 'store'])->name('kursus.store');
+    Route::get('/kursus/{id}/edit', [KursusController::class, 'edit'])->name('kursus.edit');
+    Route::put('/kursus/{id}', [KursusController::class, 'update'])->name('kursus.update');
+    Route::delete('/kursus/{id}', [KursusController::class, 'destroy'])->name('kursus.destroy');
 });
+
+
 Route::get('/dashboardadmin', [DashboardAdminController::class, 'index']);
 Route::get('/user', [UserController::class, 'index']);
 Route::get('/tutormateri', [TutorMateriController::class, 'index']);
