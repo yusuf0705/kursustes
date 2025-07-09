@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use illuminate\Support\Facades\Auth;
 
 class CheckRole
 {
@@ -13,8 +14,11 @@ class CheckRole
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next, string $role): Response
     {
+        if (!Auth::check() || Auth::users()->role !== $role ) {
+            abort (403, 'unauthorized');
+        }
         return $next($request);
     }
 }

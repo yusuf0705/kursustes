@@ -10,6 +10,14 @@
                 </div>
             </header>
 
+            @can('isAdmin')
+            <strong>Selamat datang Admin {{ explode(' ', Auth::user()->name)[0] }}</strong>
+            @elsecan('isTutor')
+                        <strong> datang Tutor {{ explode(' ', Auth::user()->name)[0] }}</strong>
+                    @endcan
+                    <br></br>
+
+
             <!-- Dashboard Content -->
             <div class="container mx-auto p-6 space-y-6">
                 <!-- Stats Section -->
