@@ -23,13 +23,6 @@ class Pendaftaran extends Model
         'status',
     ];
 
-    // public function kursus() {
-    //     return $this->belongsTo(Kursus::class, 'id_kursus');
-    // }
-
-    // public function pelajar() {
-    //     return $this->belongsTo(Pelajar::class, 'id_pelajar');
-    // }
    public function pembayaran()
 {
     return $this->hasOne(Pembayaran::class, 'id_pendaftaran', 'id_pendaftaran');

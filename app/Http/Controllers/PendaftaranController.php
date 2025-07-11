@@ -14,9 +14,12 @@ class PendaftaranController extends Controller
 {
     public function create(Request $request)
     {
+        $user = Auth::user();
+         $pelajar = Pelajar::with('user')->where('user_id', $user->id)->first();
+
         $harga = $request->query('harga', 300000);
         $id_kursus = $request->query('id_kursus');
-        return view('pengguna.pendaftaran', compact('harga', 'id_kursus'));
+return view('pengguna.pendaftaran', compact('harga', 'id_kursus', 'pelajar'));
     }
 
     public function store(Request $request)
