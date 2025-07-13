@@ -14,12 +14,13 @@ use App\Http\Controllers\{
     KursusController,
     DashboardAdminController,
     JadwalController,
-    UserController,
     TutorMateriController,
     PendaftaranAdminController,
     QuizController,
-    QuizPlayController
+    QuizPlayController,
+    UserManagementController
 };
+
 
 Route::get('/', [HomeController::class, 'landingpage'])->name('home');
 Route::get('/landingpage', [HomeController::class, 'landingpage']);
@@ -74,9 +75,17 @@ Route::middleware(['auth'])->group(function () {
 
     // Admin routes
     Route::middleware('role:admin')->group(function () {
-        Route::get('/user', [UserController::class, 'index'])->name('admin.user.index');
+        
+          Route::prefix('admin')->name('admin.')->group(function () {
+        // User Management Routes
+        Route::get('/users', [UserManagementController::class, 'index'])->name('users.index');
+        Route::get('/users/create', [UserManagementController::class, 'create'])->name('users.create');
+        Route::post('/users', [UserManagementController::class, 'store'])->name('users.store');
+        Route::get('/users/{user}/edit', [UserManagementController::class, 'edit'])->name('users.edit');
+        Route::put('/users/{user}', [UserManagementController::class, 'update'])->name('users.update');
+        Route::delete('/users/{user}', [UserManagementController::class, 'destroy'])->name('users.destroy');
 
-        Route::prefix('admin')->name('admin.')->group(function () {
+            // Kursus Routes
             Route::get('/kursus', [KursusController::class, 'adminIndex'])->name('kursus.index');
             Route::get('/kursus/create', [KursusController::class, 'create'])->name('kursus.create');
             Route::post('/kursus', [KursusController::class, 'store'])->name('kursus.store');
@@ -84,6 +93,7 @@ Route::middleware(['auth'])->group(function () {
             Route::put('/kursus/{id}', [KursusController::class, 'update'])->name('kursus.update');
             Route::delete('/kursus/{id}', [KursusController::class, 'destroy'])->name('kursus.destroy');
 
+            // Pendaftaran Routes
             Route::get('/pendaftaran', [PendaftaranController::class, 'index'])->name('pendaftaran.index');
             Route::delete('/pendaftaran/{id}', [PendaftaranController::class, 'destroy'])->name('pendaftaran.destroy');
             Route::put('/pendaftaran/{id}/konfirmasi', [PendaftaranController::class, 'konfirmasi'])->name('pendaftaran.konfirmasi');
