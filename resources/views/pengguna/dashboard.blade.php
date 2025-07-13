@@ -9,11 +9,14 @@
         <div class="relative text-center">
             <h1 class="text-2xl font-bold"></h1>
         </div>
+        <br></br>
     </div>
+
   @can('isPelajar')
-   <strong>Selamat datang Pelajar {{ explode(' ', Auth::user()->name)[0] }}</strong>
+   <strong> Selamat datang Pelajar {{ explode(' ', Auth::user()->name)[0] }}</strong>
 @endcan
-<br></br>
+
+<br> </br>
 
     <!-- Kursus List -->
     <div class="space-y-4" id="courseList">

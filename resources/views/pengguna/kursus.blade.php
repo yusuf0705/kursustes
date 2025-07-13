@@ -5,6 +5,7 @@
     <title>@yield('title', 'Dashboard')</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="bg-purple-50 min-h-screen font-sans">
     <div class="flex min-h-screen">
@@ -27,10 +28,10 @@
                     Kursus
                 </a>
 
-                <a href="{{ url('/login') }}" class="flex flex-col items-center">
-                    <span class="material-icons">exit_to_app</span>
-                    logout
-                </a>
+                <button type="button" onclick="logoutConfirm()" class="flex flex-col items-center text-white transition hover:text-red-400 cursor-pointer bg-transparent border-none"> 
+                    <span class="material-icons">exit_to_app</span> 
+                    logout 
+                </button>
                 
             </nav>
         </aside>
@@ -80,5 +81,37 @@
             @endif
         </main>
     </div>
+
+    <!-- Form logout (hidden) -->
+    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;"> 
+        @csrf 
+    </form>
+
+    <!-- JavaScript -->
+    <script> 
+        function logoutConfirm(event) { 
+            // Mencegah default action apapun
+            if (event) {
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            
+            Swal.fire({ 
+                title: 'Yakin mau logout?', 
+                text: "Kamu akan keluar dari akun ini.", 
+                icon: 'warning', 
+                showCancelButton: true, 
+                confirmButtonColor: '#d33', 
+                cancelButtonColor: '#3085d6', 
+                confirmButtonText: 'Ya, Logout!', 
+                cancelButtonText: 'Batal', 
+                reverseButtons: true 
+            }).then((result) => { 
+                if (result.isConfirmed) { 
+                    document.getElementById('logout-form').submit(); 
+                } 
+            }) 
+        }
+    </script>
 </body>
 </html>

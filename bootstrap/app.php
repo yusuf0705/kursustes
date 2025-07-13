@@ -11,8 +11,14 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
+        // Register middleware aliases
         $middleware->alias([
-            'checkrole' => \App\Http\Middleware\CheckRole::class,
+            'session.timeout' => \App\Http\Middleware\SessionTimeoutMiddleware::class,
+              'role' => \App\Http\Middleware\RoleMiddleware::class,
+        ]);
+        
+        $middleware->web(append: [
+            \App\Http\Middleware\SessionTimeoutMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

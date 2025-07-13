@@ -3,7 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Gate;  // Perbaiki huruf kapital
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Blade;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,14 +18,23 @@ class AppServiceProvider extends ServiceProvider
     ];
 
     /**
-     * Register any authentication / authorization services.
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        //
+    }
+
+    /**
+     * Bootstrap any application services.
      *
      * @return void
      */
     public function boot()
     {
-        $this->register();
-
+        // Define Gates
         Gate::define('isAdmin', function($user) {
             return $user->role == 'admin';
         });
@@ -32,9 +42,26 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('isTutor', function($user) {
             return $user->role == 'tutor';
         });
-        
+
         Gate::define('isPelajar', function($user) {
             return $user->role == 'pelajar';
+        });
+
+        // Define Blade Directives
+        Blade::directive('role', function ($role) {
+            return "<?php if(auth()->check() && auth()->user()->role === {$role}): ?>";
+        });
+
+        Blade::directive('endrole', function () {
+            return "<?php endif; ?>";
+        });
+
+        Blade::directive('hasrole', function ($roles) {
+            return "<?php if(auth()->check() && in_array(auth()->user()->role, [{$roles}])): ?>";
+        });
+
+        Blade::directive('endhasrole', function () {
+            return "<?php endif; ?>";
         });
     }
 }

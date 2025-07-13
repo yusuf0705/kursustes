@@ -13,7 +13,7 @@
             @can('isAdmin')
             <strong>Selamat datang Admin {{ explode(' ', Auth::user()->name)[0] }}</strong>
             @elsecan('isTutor')
-                        <strong> datang Tutor {{ explode(' ', Auth::user()->name)[0] }}</strong>
+                        <strong> Selamat datang Tutor {{ explode(' ', Auth::user()->name)[0] }}</strong>
                     @endcan
                     <br></br>
 
