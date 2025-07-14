@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Pelajar; 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -48,23 +49,11 @@ class AuthController extends Controller
 
         switch ($request->role) {
             case 'pelajar':
-                \App\Models\Pelajar::create([
+                Pelajar::create([
                     'user_id' => $user->id,
                     'name' => $request->name,
                 ]);
-                break;
-            case 'tutor':
-                \App\Models\Tutor::create([
-                    'user_id' => $user->id,
-                    'name' => $request->name,
-                ]);
-                break;
-            case 'admin':
-                \App\Models\Admin::create([
-                    'user_id' => $user->id,
-                    'name' => $request->name,
-                ]);
-                break;
+    
         }
 
         return redirect()->route('login')

@@ -63,7 +63,6 @@ class PembayaranController extends Controller
             return redirect()->route('pendaftaran.create')->with('error', 'Pendaftaran tidak ditemukan.');
         }
 
-        // Upload bukti (jika ada)
         $buktiPath = null;
 
     if ($request->hasFile('bukti')) {
