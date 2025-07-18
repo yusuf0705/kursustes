@@ -68,33 +68,56 @@ class UserManagementController extends Controller
     }
 
     public function update(Request $request, User $user)
-    {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'password' => 'nullable|string|min:8|confirmed',
-            'phone_number' => 'nullable|string|max:20',
-            'address' => 'nullable|string|max:500',
-            'role' => 'required|in:admin,tutor,pelajar',
-        ]);
+{
+    $validator = Validator::make($request->all(), [
+        'name' => 'required|string|max:255',
+        'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+        'password' => 'nullable|string|min:8|confirmed',
+        'phone_number' => 'nullable|string|max:20',
+        'address' => 'nullable|string|max:500',
+        'role' => 'required|in:admin,tutor,pelajar',
+    ]);
 
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
-
-        try {
-            $data = $request->only(['name', 'email', 'phone_number', 'address', 'role']);
-            if ($request->filled('password')) {
-                $data['password'] = Hash::make($request->password);
-            }
-
-            $user->update($data);
-
-            return redirect()->route('admin.users.index')->with('success', 'User berhasil diperbarui!');
-        } catch (\Exception $e) {
-            return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage())->withInput();
-        }
+    if ($validator->fails()) {
+        return back()->withErrors($validator)->withInput();
     }
+
+    try {
+        $oldRole = $user->role; // Simpan role lama sebelum update
+        $data = $request->only(['name', 'email', 'phone_number', 'address', 'role']);
+
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
+        }
+
+        $user->update($data);
+
+        if ($oldRole !== $request->role) {
+            match ($oldRole) {
+                'admin' => Admin::where('user_id', $user->id)->delete(),
+                'tutor' => Tutor::where('user_id', $user->id)->delete(),
+                'pelajar' => Pelajar::where('user_id', $user->id)->delete(),
+            };
+
+            match ($request->role) {
+                'admin' => Admin::create(['user_id' => $user->id, 'name' => $user->name]),
+                'tutor' => Tutor::create(['user_id' => $user->id, 'name' => $user->name]),
+                'pelajar' => Pelajar::create(['user_id' => $user->id, 'name' => $user->name]),
+            };
+        } else {
+            match ($request->role) {
+                'admin' => Admin::where('user_id', $user->id)->update(['name' => $user->name]),
+                'tutor' => Tutor::where('user_id', $user->id)->update(['name' => $user->name]),
+                'pelajar' => Pelajar::where('user_id', $user->id)->update(['name' => $user->name]),
+            };
+        }
+
+        return redirect()->route('admin.users.index')->with('success', 'User berhasil diperbarui!');
+    } catch (\Exception $e) {
+        return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage())->withInput();
+    }
+}
+
 
     public function destroy(User $user)
     {

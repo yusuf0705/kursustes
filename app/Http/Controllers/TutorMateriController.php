@@ -17,7 +17,7 @@ class TutormateriController extends Controller
 
     public function create()
 {
-    $kursusList = Kursus::all(); // berisi id_kursus dan kode_bahasa
+    $kursusList = Kursus::all(); 
     return view('admin_tutor.tutormateri_crud.create', compact('kursusList'));
 }
 

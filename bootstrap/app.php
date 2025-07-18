@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'session.timeout' => \App\Http\Middleware\SessionTimeoutMiddleware::class,
               'role' => \App\Http\Middleware\RoleMiddleware::class,
+             'auth.custom' => \App\Http\Middleware\AuthMiddleware::class,
         ]);
         
         $middleware->web(append: [
