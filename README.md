@@ -25,8 +25,7 @@ Kelompok 5 - IF 2D Malam:
 [📱 Tonton Demo Aplikasi](https://youtu.be/XuuKs1fdpLo)
 
 ### 📖 Manual Book
-[📋 Baca Manual Book](link-manual-book-disini)
-Manual Book: 
+- [📙 Manual Book Aplikasi (PDF)](https://github.com/Gray1283/Jasabimbingankursusbahasaasing/raw/main/Dokumentasi/Manual%20Book.pdf)
 
 ## 🚀 Cara Instalasi & Menjalankan Aplikasi
 
