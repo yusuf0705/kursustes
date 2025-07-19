@@ -16,8 +16,8 @@ Kelompok 5 - IF 2D Malam:
 ## 📚 Dokumentasi
 
 ### 📄 Laporan Akhir (PBL)
-[📁 Download Laporan PDF](https://github.com/user-attachments/files/21327295/LaporanPBL_Kelompok5_AplikasiJasaBimbelKursusBahasaAsing.pdf)
-
+[📁 Download Laporan PDF]([LaporanPBL_Kelompok5_AplikasiJasaBimbelKursusBahasaAsing.pdf](https://github.com/user-attachments/files/21327841/LaporanPBL_Kelompok5_AplikasiJasaBimbelKursusBahasaAsing.pdf)
+)
 ### 🎥 Video Presentasi
 [🎬 Tonton Video Presentasi](https://youtu.be/s0ZRCXyb614)
 
