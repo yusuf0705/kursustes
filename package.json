@@ -2,9 +2,9 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "build": "vite build",
-        "dev": "vite"
-    },
+    "build": "rm -rf node_modules package-lock.json && npm install && vite build",
+    "prebuild": "npm cache clean --force"
+  },
     "devDependencies": {
         "@popperjs/core": "^2.11.6",
         "@tailwindcss/postcss": "^4.1.11",
