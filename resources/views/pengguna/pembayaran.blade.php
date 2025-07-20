@@ -39,7 +39,10 @@
 
             <!-- Card Body -->
             <div class="px-6 py-6">
-                <form action="#" method="POST" enctype="multipart/form-data" class="space-y-6">
+                <!-- GANTI ACTION DENGAN ROUTE YANG BENAR -->
+                <form action="{{ route('pembayaran.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
+                    @csrf
+                    
                     <!-- Metode Pembayaran -->
                     <div class="space-y-2">
                         <label class="block text-sm font-semibold text-gray-700 mb-2">
@@ -48,7 +51,7 @@
                             </svg>
                             Metode Pembayaran
                         </label>
-                        <select name="metode" id="metode" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors" onchange="setNoRek()">
+                        <select name="metode" id="metode" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors" onchange="setNoRek()" required>
                             <option value="">-- Pilih Metode Pembayaran --</option>
                             <option value="transfer">🏦 Transfer Bank</option>
                             <option value="qris">📱 QRIS</option>
@@ -91,7 +94,8 @@
                             Upload Bukti Pembayaran
                         </label>
                         <div id="upload-area" class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-blue-400 transition-colors">
-                            <input type="file" name="bukti" id="bukti" class="hidden" accept="image/*" onchange="previewImage(event)">
+                            <!-- INPUT FILE YANG TIDAK HIDDEN DAN TETAP BISA DIAKSES -->
+                            <input type="file" name="bukti" id="bukti" class="w-full p-2 border rounded mb-4" accept="image/*" onchange="previewImage(event)" required>
                             
                             <!-- Default Upload UI -->
                             <div id="upload-placeholder">
@@ -100,7 +104,7 @@
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                                     </svg>
                                     <p class="text-sm text-gray-600">
-                                        <span class="font-medium text-blue-600">Klik untuk upload</span> atau drag and drop
+                                        <span class="font-medium text-blue-600">Klik untuk upload</span> atau pilih file di atas
                                     </p>
                                     <p class="text-xs text-gray-500 mt-1">PNG, JPG, JPEG (max. 5MB)</p>
                                 </label>
@@ -125,12 +129,6 @@
                             </svg>
                             Kirim Pembayaran
                         </button>
-
-                        <!-- Tombol Kembali ke Kursus -->
-                        <a href="{{ route('kursus.index') }}"
-                        class="mt-4 inline-block w-full text-center bg-blue-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-gray-400 transition-all duration-200">
-                        Kembali ke Daftar Kursus
-                        </a>
                     </div>
                 </form>
             </div>
@@ -219,39 +217,26 @@
             updateFormStatus();
         }
 
-        // Simulate form submission
+        // HAPUS ATAU MODIFIKASI EVENT LISTENER YANG MENCEGAH FORM SUBMIT
+        // Jika ingin tetap ada validasi, gunakan ini:
         document.querySelector('form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Check if form is complete
             const metode = document.getElementById('metode').value;
             const bukti = document.getElementById('bukti').files[0];
             
             if (!metode) {
+                e.preventDefault();
                 alert('Silakan pilih metode pembayaran');
                 return;
             }
             
             if (!bukti) {
+                e.preventDefault();
                 alert('Silakan upload bukti pembayaran');
                 return;
             }
             
-            // Update description
-            document.getElementById('form-description').textContent = 'Pembayaran berhasil dikirim dan sedang diproses';
-            
-            // Show success alert
-            const successAlert = document.getElementById('success-alert');
-            successAlert.classList.remove('hidden');
-            
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            
-            // Hide alert after 5 seconds
-            setTimeout(() => {
-                successAlert.classList.add('hidden');
-                document.getElementById('form-description').textContent = 'Silakan lengkapi form pembayaran di bawah ini';
-            }, 5000);
+            // Jika validasi lolos, biarkan form submit normal ke server
+            // JANGAN gunakan e.preventDefault() di sini
         });
         
         // Update description when form is being filled
